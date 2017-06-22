@@ -1,0 +1,111 @@
+import os
+#from cassiopeia import riotapi
+#from cassiopeia.type.api.exception import APIError
+#import pandas as p
+#import numpy as n
+#import random
+import csv
+
+target = open("TestMatchesTogether.csv", 'w')
+totInv = 0
+
+def oneGame(matchPlayers):
+
+	order = []
+	i = 0
+	invalid = 0
+	while i < 10:
+		if invalid > 100:
+			#print "invalidinvalidinvalidinvalidinvalidinvalidinvalidinvalidinvalidinvalidinvalidinvalid"
+			global totInv
+			totInv = totInv + 1
+			return
+		for p in matchPlayers:
+			if i < 5 and p[2] == "100":
+				if p[4] == "top" and i == 0:
+					order.append(p)
+					i=i+1
+				elif p[4] == "jg" and i == 1:
+					order.append(p)
+					i=i+1
+				elif p[4] == "mid" and i == 2:
+					order.append(p)
+					i=i+1
+				elif p[4] == "adc" and i == 3:
+					order.append(p)
+					i=i+1
+				elif p[4] =="sup" and i == 4:
+					order.append(p)
+					i=i+1
+				else:
+					invalid = invalid+1
+					pass
+			elif p[2] == "200":
+				if p[4] == "top" and i == 5:
+					order.append(p)
+					i=i+1
+				elif p[4] == "jg" and i == 6:
+					order.append(p)
+					i=i+1
+				elif p[4] == "mid" and i == 7:
+					order.append(p)
+					i=i+1
+				elif p[4] == "adc" and i == 8:
+					order.append(p)
+					i=i+1
+				elif p[4] =="sup" and i == 9:
+					order.append(p)
+					i=i+1
+				else:
+					invalid = invalid+1
+					pass			
+			else:
+				pass
+	
+
+	#Create csv string for one line in new file
+	
+	temp = order[0][0]
+	for p in order:
+		temp = temp + "," + p[5] + "," + p[6] + "," + p[7] + "," + p[8] + "," + p[9]
+	
+	if order[0][10] == "True":
+		temp = temp +"," + "1" + "\n"
+	else:
+		temp = temp +"," + "2" + "\n"
+
+	#write line to file
+	target.write(temp)
+
+
+def main():
+
+	#Read match file
+	f = csv.reader(open("AllMatches.csv"), delimiter=",")
+
+	#Add 10 players from game to a list
+	total = 0
+	count = 0
+	while True:
+		matchPlayers = []
+		total = total+1
+		if total%10000 == 0:
+			print total
+			print totInv
+		while count < 10:
+			matchPlayers.append(f.next())
+			count= count+1
+			#print "count: " + str(count)
+		oneGame(matchPlayers)
+		count = 0
+
+	#Order the 10 players so each game is the same
+	#oneGame(matchPlayers)
+	
+	
+	target.close()
+	
+	
+
+if __name__ == "__main__":
+    main()	

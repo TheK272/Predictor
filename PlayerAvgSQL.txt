@@ -1,0 +1,7 @@
+SELECT  `COL 2` ,  `COL 5` , AVG(  `COL 7` ) , AVG(  `COL 8` ) , AVG(  `COL 9` ) , AVG(  `COL 10` ) , AVG( 
+CASE WHEN  `COL 11` = 
+'True' THEN 1 
+ELSE 0 
+END ), COUNT(`COL 7`)
+FROM  `TABLE 8` 
+GROUP BY  `COL 2` ,  `COL 5` 
